@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contador Online</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body id="home" class="falapo">
+
+  
+  <div class="container">
+    <div id="style">
+    <div id="titulo">
+      <h1 class="display-4 text-light bg-warning">TEMPORIZADOR</h1>
+    </div>
+    <div id="numbers" class="m-4">
+      <div class="btn btn-outline-warning btn-lg" id="menos">-</div>
+    
+        <input id="mopa" type="number" max=999 placeholder="0" class="display-4 text-warning"/>
+       
+    
+      <div class="btn btn-outline-warning btn-lg" id="mais">+</div>
+    </div>
+    <div id="buttons">
+      <div class="btn btn-outline-warning cudeboi btn-lg" id="barra"><div id="barra2"></div></div>
+      <div class="btn btn-outline-warning cudeboi btn-lg" id="zerar">Zerar</div>
+      <div class="btn btn-outline-warning cudeboi btn-lg" id="start">Iniciar</div>
+    </div>
+  </div>
+  </div>
+
+
+  <script>
+    var i = 0;
+    var start = document.getElementById("start");
+    var cronometroLigado = 0;
+    var numberMais = document.getElementById("mais");
+    var numberMenos = document.getElementById("menos");
+    var numberZerar = document.getElementById("zerar");
+    var textoP = document.createTextNode("Parar");
+    var textoZ = document.createTextNode("Zerar");
+    var inputa = document.querySelector("div#numbers input#mopa");
+    var barra = document.querySelector('#barra2');
+    var comprimento = 400;
+
+
+    inputa.onclick = function desabiitaInput(){
+        if(cronometroLigado == 1){
+          inputa.setAttribute('disabled','disabled');
+        }
+    }
+
+
+    inputa.onkeyup = function test() {
+
+      if (inputa.value > 999) {
+        alert("Digite um número menor que 1000");
+        inputa.value = null;
+      }
+
+      if (inputa.value < 0) {
+        alert("Digite um número maior ou igual a 0");
+        inputa.value = null;
+      }
+
+
+    }
+
+
+
+
+
+    numberMais.onclick = function up() {
+      if (cronometroLigado == 0) {
+        if (inputa.value < 999) {
+          inputa.value++;
+        } else {
+          alert("Niet. Permitimos apenas números menores que 1000");
+          inputa.value = null;
+        }
+      }
+    }
+
+    numberMenos.onclick = function down() {
+      if (cronometroLigado == 0) {
+        if (inputa.value > 0) {
+          inputa.value--;
+        }
+      }
+    }
+
+
+
+
+    start.onclick = function iniciaCronometro() {
+      barra.style.transition = "0";
+      var valoinicial = inputa.value;
+      barra.style.backgroundColor = "#ffc107";
+      if (cronometroLigado == 0) {
+
+        cronometroLigado = 1;
+        console.log("iniciou");
+
+        numberZerar.innerHTML = "";
+        numberZerar.appendChild(textoP);
+        barra.style.width = "400px";
+        var intervalo = setInterval(function () {
+
+          if (i == 1) {
+            numberZerar.innerHTML = "";
+            numberZerar.appendChild(textoZ);
+            i = 0;
+            cronometroLigado = 0;
+            inputa.removeAttribute('disabled')
+            clearInterval(intervalo);
+          }
+
+          if (inputa.value > 0) {
+            inputa.value = inputa.value - 1;
+            comprimento =  ((inputa.value)/valoinicial)*400;
+            barra.style.width = comprimento + "px";
+            barra.style.transition = "1s";
+            barra.style.transitionTimingFunction = "linear";
+            
+          } else {
+            numberZerar.innerHTML = "";
+            numberZerar.appendChild(textoZ);
+            inputa.value = null;
+            cronometroLigado = 0;
+            inputa.removeAttribute('disabled')
+            clearInterval(intervalo);
+          }
+
+        }, 1000);
+      }
+    }
+
+    numberZerar.onclick = function zerar() {
+      if (cronometroLigado == 1) {
+        i = 1;
+
+      } else {
+        inputa.value = null;
+        barra.style.backgroundColor = "#ffffff";
+      }
+    }
+
+  </script>
+
+
+
+  <footer>By <a href="https://www.instagram.com/erms1337" target="_blank">Erms</a> && <a target="_blank" href="https://www.instagram.com/ismael.rocha_">Ismael</a></footer>
+
+</body>
+
+</html>
